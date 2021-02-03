@@ -47,7 +47,8 @@ app.post('/savetogithub', async (req, res) => {
     }
     // console.log(care);
     // console.log(err.response);
-
+    console.log(req.body.content)
+    console.log(typeof req.body.content)
     let obj = {
         owner: req.body.owner,
         repo: req.body.repo,

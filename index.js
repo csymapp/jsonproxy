@@ -1,9 +1,15 @@
+const { Octokit } = require("@octokit/rest");
 const axios = require('axios')
 const to = require('await-to-js').to
 const express = require('express');
 const cors = require('cors')
 const app = express();
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json());
+
 app.use(cors())
+
 
 
 app.get('/', async (req, res) => {
@@ -19,6 +25,49 @@ app.get('/', async (req, res) => {
         return res.json({})
     }
     return res.json({ result: care.data })
+});
+
+app.post('/savetogithub', async (req, res) => {
+    let gitkey = req.body.gitkey
+    const octokit = new Octokit({
+        auth: gitkey,
+    });
+    let [err, care] = await to(
+        // axios.get(`https://api.github.com/repos/${req.body.owner}/${req.body.repo}/contents/${req.body.path}`)
+
+        octokit.request(`GET /repos/${req.body.owner}/${req.body.repo}/contents/${req.body.path}`, {
+            owner: req.body.owner,
+            repo: req.body.repo,
+            path: req.body.path
+        })
+    );
+    let sha;
+    if (!err) {
+        sha = care.data.sha
+    }
+    // console.log(care);
+    // console.log(err.response);
+
+    let obj = {
+        owner: req.body.owner,
+        repo: req.body.repo,
+        path: req.body.path,
+        message: req.body.message,
+        content: Buffer.from(typeof req.body.content === 'object'?JSON.stringify(req.body.content):req.body.content).toString("base64"),
+    }
+    if(sha){
+        obj.sha = sha
+    };
+    [err, care] = await to(
+        octokit.request(
+            // `PUT ${req.body.path}`, {
+            `PUT /repos/${req.body.owner}/${req.body.repo}/contents/${req.body.path}`, obj
+        )
+    );
+    if(err){
+        return res.json(err.data)
+    }
+    res.json(care.data)
 });
 
 let server = app.listen(9230, function () {

@@ -21,9 +21,12 @@
   },
   "homepage": "https://github.com/csymapp/jsonproxy#readme",
   "dependencies": {
+    "@octokit/rest": "^18.1.0",
     "await-to-js": "^2.1.1",
     "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "octokit": "^1.0.0-hello-world"
   }
 }

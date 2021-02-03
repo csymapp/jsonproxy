@@ -1,0 +1,13 @@
+[Unit]
+Description=jsonproxy
+After=network.target
+
+[Service]
+Environment=NODE_PORT=%i
+Type=simple
+User=root
+ExecStart=/usr/bin/node /root/production/jsonproxy/index.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

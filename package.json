@@ -1,0 +1,29 @@
+{
+  "name": "jsonproxy",
+  "version": "1.0.0",
+  "description": "Make requests and return the response in json format",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/csymapp/jsonproxy.git"
+  },
+  "keywords": [
+    "json",
+    "proxy"
+  ],
+  "author": "Brian Onang'o",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/csymapp/jsonproxy/issues"
+  },
+  "homepage": "https://github.com/csymapp/jsonproxy#readme",
+  "dependencies": {
+    "await-to-js": "^2.1.1",
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}

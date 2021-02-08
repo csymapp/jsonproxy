@@ -45,11 +45,6 @@ app.post('/savetogithub', async (req, res) => {
     if (!err) {
         sha = care.data.sha
     }
-    // console.log(care);
-    // console.log(err.response);
-    // console.log(req.body)
-    // console.log(req.body.content)
-    // console.log(typeof req.body.content)
     let obj = {
         owner: req.body.owner,
         repo: req.body.repo,
@@ -70,6 +65,32 @@ app.post('/savetogithub', async (req, res) => {
         return res.json(err.data)
     }
     res.json(care.data)
+});
+app.post('/readfromgithub', async (req, res) => {
+    let gitkey = req.body.gitkey
+    const octokit = new Octokit({
+        auth: gitkey,
+    });
+    let [err, care] = await to(
+        octokit.request(`GET /repos/${req.body.owner}/${req.body.repo}/contents/${req.body.path}`, {
+            owner: req.body.owner,
+            repo: req.body.repo,
+            path: req.body.path
+        })
+    );
+    // let sha;
+    if (err) {
+        return res.status(500)send({err})
+    }
+
+    let content = atob(care.data.content);
+    try{
+        content = JSON.parse(content)
+        res.json(content)
+    }catch(err){
+        res.send(content)
+    }
+    res.json(content)
 });
 
 let server = app.listen(9230, function () {

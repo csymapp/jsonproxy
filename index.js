@@ -80,7 +80,7 @@ app.post('/readfromgithub', async (req, res) => {
     );
     // let sha;
     if (err) {
-        return res.status(500)send({err})
+        return res.status(500).send({err})
     }
 
     let content = atob(care.data.content);

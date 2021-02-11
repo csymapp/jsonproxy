@@ -99,7 +99,7 @@ app.delete('/deleteFromTb', async (req, res) => {
     if (req.headers["Content-Type"]) headers['Content-Type'] = req.headers["Content-Type"]
     if (req.headers["X-Authorization"]) headers['X-Authorization'] = req.headers["X-Authorization"]
     if (req.headers["x-authorization"]) headers['X-Authorization'] = req.headers["x-authorization"]
-    let [err, care] = await to(axios.get(url, {
+    let [err, care] = await to(axios.delete(url, {
         headers
     }));
     if (err) {

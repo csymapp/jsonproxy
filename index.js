@@ -103,6 +103,7 @@ app.delete('/deleteFromTb', async (req, res) => {
         headers
     }));
     if (err) {
+        console.log(err)
         return res.json({})
     }
     return res.json({ result: care.data || 'Empty' })
